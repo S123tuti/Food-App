@@ -1,7 +1,8 @@
 import "./style.css"
 import { useState } from "react";
 
-const Search = () =>{
+const Search = (props) =>{
+    const {getDataFromSearchComponent} = props
 
     const [inputValue, setInputValue] = useState('')
 
@@ -11,9 +12,13 @@ const {value} = event.target
 setInputValue(value)
     }
     // console.log(inputValue);
-    
+
+    const handleSubmit = (event) =>{
+        event.preventDefault()
+        getDataFromSearchComponent(inputValue)
+    }
     return(
-        <form className="Search">
+        <form onSubmit={handleSubmit} className="Search">
        <input name="search" onChange={handleInputValue} value={inputValue} placeholder="Search Recipes" id="search"/>
        <button type="submit">Search</button>
         </form>
