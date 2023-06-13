@@ -1,28 +1,45 @@
-import "./style.css"
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { ThemeContext } from "../../App";
+import "./styles.css";
 
-const Search = (props) =>{
-    const {getDataFromSearchComponent} = props
+const Search = (props) => {
+  const { handleSubmit, apiCalledSuccess, setApiCallSuccess } = props;
+  const [search, setSearch] = useState("");
+  const { theme } = useContext(ThemeContext);
 
-    const [inputValue, setInputValue] = useState('')
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
 
-    const handleInputValue = (event) =>{
-const {value} = event.target
-// set updated state
-setInputValue(value)
+  const onSubmit = (e) => {
+    handleSubmit(e, search);
+  };
+
+  useEffect(() => {
+    if (apiCalledSuccess) {
+      setSearch("");
+      setApiCallSuccess(false);
     }
-    // console.log(inputValue);
+  }, [apiCalledSuccess,setApiCallSuccess]);
 
-    const handleSubmit = (event) =>{
-        event.preventDefault()
-        getDataFromSearchComponent(inputValue)
-    }
-    return(
-        <form onSubmit={handleSubmit} className="Search">
-       <input name="search" onChange={handleInputValue} value={inputValue} placeholder="Search Recipes" id="search"/>
-       <button type="submit">Search</button>
-        </form>
-    )
-}
+  return (
+    <form className="form" onSubmit={onSubmit}>
+      <input
+        name="search"
+        id="search"
+        value={search}
+        onChange={handleChange}
+        placeholder="Search Recipes"
+      />
+      <button
+        style={theme ? { backgroundColor: "#12343b" } : {}}
+        disabled={search.trim() === ""}
+        type="submit"
+      >
+        Search recipes
+      </button>
+    </form>
+  );
+};
 
-export default Search
+export default Search;
