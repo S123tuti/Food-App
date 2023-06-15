@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { ThemeContext } from "../../App";
-import "./styles.css";
+import "./style.css";
 
 const Search = (props) => {
   const { handleSubmit, apiCalledSuccess, setApiCallSuccess } = props;

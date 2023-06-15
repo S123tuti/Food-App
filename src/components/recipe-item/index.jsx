@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ThemeContext } from "../../App";
-import "./styles.css";
+import "./style.css";
 
 const RecipeItem = (props) => {
   const { id, image, title, addToFavorites } = props;
